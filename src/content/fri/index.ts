@@ -22,3 +22,31 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
         }
     }
 });
+
+// Remove group list
+const gl = document.querySelector<HTMLDivElement>('div.group-list');
+
+if (gl) {
+    gl.remove();
+}
+
+// Remove groups
+document.querySelectorAll<HTMLDivElement>('div.bottom-aligned').forEach((entry) => {
+    entry.remove();
+});
+
+// Remove header links
+/*const hl = document.querySelector<HTMLDivElement>('div.header')
+    ?.querySelector<HTMLDivElement>('div.aside');
+if (hl) {
+    hl.remove();
+}*/
+
+// Rename subjects
+document.querySelectorAll<HTMLAnchorElement>('a.link-subject').forEach((entry) => {
+    const m = entry.innerText.match(/^(.*?)(?:\(.*\))?_.*$/);
+
+    if (m) {
+        entry.innerText = m[1];
+    }
+});
