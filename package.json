@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc -b && vite build && vite build --config vite.config.script.ts && vite build --config vite.config.style.ts",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "tsx": "^4.19.3",
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
-    "vue-tsc": "^2.2.4"
+    "vue-tsc": "^2.2.4",
+    "webextension-polyfill": "^0.12.0"
   }
 }

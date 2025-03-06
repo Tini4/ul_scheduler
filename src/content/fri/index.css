@@ -1,0 +1,7 @@
+.grid-complete-row {
+    pointer-events: none;
+}
+
+.grid-entry {
+    pointer-events: auto;
+}

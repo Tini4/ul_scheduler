@@ -7,14 +7,19 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
     plugins: [vue()],
     build: {
+        emptyOutDir: false,
+        //outDir: 'dist/content',
         terserOptions: {
             mangle: false,
         },
         rollupOptions: {
             input: {
-                options: 'src/options/index.html',
-                popup: 'src/popup/index.html',
-            }
-        }
-    }
+                fri: 'src/content/fri/index.css',
+            },
+            output: {
+                assetFileNames: 'src/content/[name].css',
+                extend: true,
+            },
+        },
+    },
 })
