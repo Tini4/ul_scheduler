@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
-import {defineConfig} from 'vite'
-import vue from '@vitejs/plugin-vue'
+import {defineConfig} from 'vite';
+import vue from '@vitejs/plugin-vue';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,6 +15,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 fri: 'src/content/fri/index.ts',
+                bf: 'src/content/bf/index.ts',
             },
             output: {
                 entryFileNames: 'src/content/[name].js',

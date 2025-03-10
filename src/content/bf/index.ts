@@ -6,7 +6,7 @@ async function run() {
     const deleted: HTMLDivElement[] = [];
 
     // Listen for clicks on entries
-    document.querySelectorAll<HTMLDivElement>('div.grid-entry').forEach((entry) => {
+    document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach((entry) => {
         entry.addEventListener('click', (event) => {
             const div = event.currentTarget as HTMLDivElement;
 
@@ -28,32 +28,22 @@ async function run() {
         }
     });
 
-    // Remove group list
-    const gl = document.querySelector<HTMLDivElement>('div.group-list');
+    // Listen for Ctrl+O (Order)
+    document.addEventListener('keydown', function (event) {
+        if (event.ctrlKey && event.key === 'o') {
+            event.preventDefault();
 
-    if (gl) {
-        gl.remove();
-    }
-
-    // Remove groups
-    document.querySelectorAll<HTMLDivElement>('div.bottom-aligned').forEach((entry) => {
-        entry.remove();
+            document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach(entry => {
+                entry.classList.add('leftmost', 'rightmost');
+                entry.style.left = Math.floor(parseFloat(entry.style.left) / 20) * 20 + '%';
+                entry.style.width = '20%';
+            });
+        }
     });
 
-    // Remove header links
-    /*const hl = document.querySelector<HTMLDivElement>('div.header')
-        ?.querySelector<HTMLDivElement>('div.aside');
-    if (hl) {
-        hl.remove();
-    }*/
-
-    // Rename subjects
-    document.querySelectorAll<HTMLAnchorElement>('a.link-subject').forEach((entry) => {
-        const m = entry.innerText.match(/^(.*?)(?:\(.*\))?_.*$/);
-
-        if (m) {
-            entry.innerText = m[1];
-        }
+    // Remove groups
+    document.querySelectorAll<HTMLSpanElement>('span.layer_one').forEach((entry) => {
+        entry.remove();
     });
 }
 
