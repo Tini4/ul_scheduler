@@ -1,46 +1,33 @@
 <script lang="ts" setup>
-import {onMounted, ref, watch} from 'vue';
-import {storage, tabs} from "webextension-polyfill";
+import Header from '../components/Header.vue';
+import Unsupported from '../components/Unsupported.vue';
+import FRI from '../components/FRI.vue';
+import BF from '../components/BF.vue';
 
-const enabled = ref<boolean>(true);
-const refresh_visible = ref<boolean>(true);
+import {onMounted, ref} from 'vue';
+import {tabs} from 'webextension-polyfill';
 
-async function get_enabled() {
-    const res = await storage.local.get('enabled');
+const url = ref<string>('');
+const urls = {
+    FRI: 'urnik.fri.uni-lj.si',
+    BF: 'urniki.bf.uni-lj.si',
+};
 
-    enabled.value = (res.enabled as boolean) ?? true;
+async function get_url() {
+    const tab = await tabs.query({active: true, currentWindow: true});
+
+    url.value = tab[0]?.url ?? '';
 }
 
-async function set_enabled(value: boolean) {
-    await storage.local.set({enabled: value});
-
-    refresh_visible.value = true;
-}
-
-onMounted(get_enabled);
-watch(enabled, set_enabled);
-
-async function reload() {
-    refresh_visible.value = false;
-
-    const [current_tab] = await tabs.query({ active: true, currentWindow: true });
-
-    if (current_tab) {
-        await tabs.reload(current_tab.id);
-    }
-}
+onMounted(get_url);
 </script>
 
 <template>
-    <div class="d-flex align-items-center gap-3">
-        <h1>UL scheduler</h1>
-        <div class="ms-auto">
-            <i class="bi bi-arrow-clockwise" :style="{'visibility': refresh_visible ? 'visible' : 'hidden'}" @click="reload"></i>
-        </div>
-        <div class="form-check form-switch">
-            <input v-model="enabled" checked class="form-check-input" role="switch" type="checkbox">
-        </div>
-    </div>
+    <Header/>
+
+    <FRI v-if="url.includes(urls.FRI)"/>
+    <BF v-else-if="url.includes(urls.BF)"/>
+    <Unsupported v-else/>
 </template>
 
 <style scoped>
