@@ -1,0 +1,9 @@
+#mainCalendar tr:not(:first-child):not(:last-child) {
+    pointer-events: none;
+}
+
+.cellTopStartd5cea6,
+.celld5cea6,
+.cellBottomEndd5cea6 {
+    pointer-events: auto;
+}

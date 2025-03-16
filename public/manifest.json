@@ -9,7 +9,9 @@
   },
   "host_permissions": [
     "https://urnik.fri.uni-lj.si/*",
-    "https://urniki.bf.uni-lj.si/*"
+    "https://urniki.bf.uni-lj.si/*",
+    "https://urnik.fmf.uni-lj.si/*",
+    "https://www.wise-tt.com/wtt_fkkt/*"
   ],
   "permissions": [
     "tabs",
@@ -38,6 +40,27 @@
       "js": [
         "browser-polyfill.min.js",
         "src/content/bf.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://urnik.fmf.uni-lj.si/*"
+      ],
+      "js": [
+        "browser-polyfill.min.js",
+        "src/content/fmf.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.wise-tt.com/wtt_fkkt/*"
+      ],
+      "js": [
+        "browser-polyfill.min.js",
+        "src/content/fkkt.js"
+      ],
+      "css": [
+        "src/content/fkkt.css"
       ]
     }
   ]

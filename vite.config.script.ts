@@ -8,7 +8,6 @@ export default defineConfig({
     plugins: [vue()],
     build: {
         emptyOutDir: false,
-        //outDir: 'dist/content',
         terserOptions: {
             mangle: false,
         },
@@ -16,6 +15,8 @@ export default defineConfig({
             input: {
                 fri: 'src/content/fri/index.ts',
                 bf: 'src/content/bf/index.ts',
+                fmf: 'src/content/fmf/index.ts',
+                fkkt: 'src/content/fkkt/index.ts',
             },
             output: {
                 entryFileNames: 'src/content/[name].js',

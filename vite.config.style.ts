@@ -8,13 +8,13 @@ export default defineConfig({
     plugins: [vue()],
     build: {
         emptyOutDir: false,
-        //outDir: 'dist/content',
         terserOptions: {
             mangle: false,
         },
         rollupOptions: {
             input: {
                 fri: 'src/content/fri/index.css',
+                fkkt: 'src/content/fkkt/index.css',
             },
             output: {
                 assetFileNames: 'src/content/[name].css',
