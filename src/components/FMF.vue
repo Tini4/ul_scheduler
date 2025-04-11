@@ -2,9 +2,11 @@
 </script>
 
 <template>
-    <!--    <hr class="my-3"/>-->
+    <hr class="my-3"/>
 
-    <main class="px-1"></main>
+    <main class="px-1">
+        <p class="mb-0">Remove entries by clicking on them. To undo a removal, press Ctrl+Z. After you are done removing, press Ctrl+O to order the entries.</p>
+    </main>
 </template>
 
 <style scoped>

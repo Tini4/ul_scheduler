@@ -5,7 +5,7 @@
     <hr class="my-3"/>
 
     <main class="px-1">
-        <p>TODO</p>
+        <p class="mb-0">Remove entries by clicking on them. To undo a removal, press Ctrl+Z.</p>
     </main>
 </template>
 

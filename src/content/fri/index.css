@@ -5,3 +5,14 @@
 .grid-entry {
     pointer-events: auto;
 }
+
+.grid-hour {
+    text-align: center;
+    position: relative;
+    top: -50%;
+    background: inherit;
+}
+
+.grid-complete-row {
+    grid-column: 2 / -1 !important;
+}
