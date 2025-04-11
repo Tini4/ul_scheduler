@@ -4,9 +4,9 @@ A browser extension to help with scheduling at University of Ljubljana.
 
 ## Supported faculties
 
-- FRI
-- FMF
 - BF
+- FMF
+- FRI
 
 ## Warning
 

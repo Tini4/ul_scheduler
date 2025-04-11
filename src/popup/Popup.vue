@@ -34,6 +34,8 @@ onMounted(get_url);
     <FMF v-else-if="url.includes(urls.FMF)"/>
     <FKKT v-else-if="url.includes(urls.FKKT)"/>
     <Unsupported v-else/>
+
+    <!--<Footer/>-->
 </template>
 
 <style scoped>
