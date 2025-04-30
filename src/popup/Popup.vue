@@ -18,9 +18,9 @@ const urls = {
 };
 
 async function get_url() {
-    const tab = await tabs.query({active: true, currentWindow: true});
+    const [tab] = await tabs.query({active: true, currentWindow: true});
 
-    url.value = tab[0]?.url ?? '';
+    url.value = tab?.url ?? '';
 }
 
 onMounted(get_url);

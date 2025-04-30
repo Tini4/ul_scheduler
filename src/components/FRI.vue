@@ -1,17 +1,73 @@
 <script lang="ts" setup>
+import {onMounted, ref, watch} from 'vue';
+import {storage, tabs} from 'webextension-polyfill';
+
+const enabled = ref<boolean>(false);
+const subjects_input = ref<string>('');
+
+async function get_subjects() {
+    const res = await storage.local.get('subjects_input');
+
+    subjects_input.value = (res.subjects_input as string) ?? '';
+}
+
+async function set_subjects() {
+    await storage.local.set({subjects_input: subjects_input.value});
+}
+
+function get_query(): string {
+    const subjects: number[] = subjects_input.value.trim().split(/\s+/).map(i => parseInt(i));
+
+    if (subjects.length === 0) return '';
+
+    return subjects.map(subj => `subject=${subj}`).join('&');
+}
+
+async function redirect_tab() {
+    const [tab] = await tabs.query({active: true, currentWindow: true});
+    const query = get_query();
+
+    if (tab?.url && tab?.id && query) {
+        const url = new URL(tab.url);
+        if (!url.pathname.includes('allocations')) {
+            if (!url.pathname.endsWith('/')) url.pathname += '/';
+            url.pathname += 'allocations';
+        }
+        url.search = query;
+
+        await tabs.update(tab.id, {url: url.toString()});
+    }
+}
+
+onMounted(get_subjects)
+watch(subjects_input, set_subjects);
 </script>
 
 <template>
     <hr class="my-3"/>
 
     <main class="px-1">
-        <p class="mb-0">Remove entries by clicking on them.<br>
-            To undo a removal, press Ctrl+Z.</p>
+        <p class="mb-2">Remove entries by clicking on them.</p>
+        <p class="mb-0">To undo a removal, press Ctrl+Z.</p>
+
+        <hr class="my-3"/>
+
+        <div class="d-flex align-items-center px-2">
+            <div class="d-flex align-items-center justify-content-center">
+                <h5 class="m-0">Link generator</h5>
+            </div>
+            <div class="form-check form-switch p-0 m-0 d-flex align-items-center justify-content-center ms-auto">
+                <input v-model="enabled" type="checkbox" class="form-check-input m-0" role="switch" checked>
+            </div>
+        </div>
+        <div v-if="enabled" class="mt-2">
+            <div class="input-group">
+                <input v-model="subjects_input" type="text" class="form-control form-control-sm"
+                       placeholder="Enter subject IDs">
+                <button class="btn btn-outline-secondary" type="button" @click="redirect_tab">Go</button>
+            </div>
+        </div>
     </main>
-
-    <hr class="my-3"/>
-
-
 </template>
 
 <style scoped>

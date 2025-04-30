@@ -11,8 +11,8 @@ async function get_enabled() {
     enabled.value = (res.enabled as boolean) ?? true;
 }
 
-async function set_enabled(value: boolean) {
-    await storage.local.set({enabled: value});
+async function set_enabled() {
+    await storage.local.set({enabled: enabled.value});
 
     refresh_visible.value = true;
 }
