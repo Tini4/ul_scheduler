@@ -88,11 +88,11 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
             const div = document.querySelector<HTMLDivElement>(`div[style="grid-area: day${day}"]`)
             if (div) {
                 const entry = `
-                <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color}7f">
+                <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color+'7f'}">
                     <div class="description">
                         <div class="top-aligned">
                             <div class="row">
-                                <a class="link-subject" href="?subject=63209">${title}</a>
+                                <a class="link-subject" href="">${title}</a>
                                 <span class="entry-type"></span>
                                 <div class="entry-hover"></div>
                             </div>

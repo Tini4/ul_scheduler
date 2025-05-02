@@ -16,7 +16,7 @@ async function set_subjects() {
 }
 
 function get_query(): string {
-    const subjects: number[] = subjects_input.value.trim().split(/\s+/).map(i => parseInt(i));
+    const subjects: number[] = subjects_input.value.trim().split(/\s+/).map(i => parseInt(i, 10));
 
     if (subjects.length === 0) return '';
 
@@ -44,11 +44,11 @@ async function redirect_tab() {
     }
 }
 
-onMounted(get_subjects)
+onMounted(get_subjects);
 watch(subjects_input, set_subjects);
 
 const add_enabled = ref<boolean>(false);
-const color_input = ref<string>('#ff99ff');
+const color_input = ref<string>('#ff7fff');
 const day_input = ref<string>('');
 const start_input = ref<number | null>(null);
 const length_input = ref<number | null>(null);
