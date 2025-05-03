@@ -2,8 +2,6 @@
 </script>
 
 <template>
-    <hr class="my-3"/>
-
     <main class="px-1">
         <p class="mb-0">TODO</p>
     </main>

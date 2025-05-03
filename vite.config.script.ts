@@ -17,6 +17,7 @@ export default defineConfig({
                 bf: 'src/content/bf/index.ts',
                 fmf: 'src/content/fmf/index.ts',
                 fkkt: 'src/content/fkkt/index.ts',
+                fs: 'src/content/fs/index.ts',
             },
             output: {
                 entryFileNames: 'src/content/[name].js',

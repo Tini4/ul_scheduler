@@ -7,6 +7,7 @@ A browser extension to help with scheduling at University of Ljubljana.
 - BF
 - FMF
 - FRI
+- FS
 
 ## Warning
 

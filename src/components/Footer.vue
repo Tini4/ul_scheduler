@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <footer></footer>
+    <footer class="px-2"></footer>
 </template>
 
 <style scoped>

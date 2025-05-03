@@ -28,8 +28,6 @@ async function add_entry() {
 </script>
 
 <template>
-    <hr class="my-3"/>
-
     <main class="px-1">
         <p class="mb-2">Remove entries by clicking on them.</p>
         <p class="mb-2">To undo a removal, press Ctrl+Z.</p>

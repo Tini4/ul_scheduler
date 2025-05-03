@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import Header from '../components/Header.vue';
+//import Footer from "../components/Footer.vue";
 import Unsupported from '../components/Unsupported.vue';
 import FRI from '../components/FRI.vue';
 import BF from '../components/BF.vue';
 import FMF from '../components/FMF.vue';
-import FKKT from '../components/FKKT.vue';
+//import FKKT from '../components/FKKT.vue';
+import FS from "../components/FS.vue";
 
 import {onMounted, ref} from 'vue';
 import {tabs} from 'webextension-polyfill';
@@ -14,7 +16,8 @@ const urls = {
     FRI: 'urnik.fri.uni-lj.si',
     BF: 'urniki.bf.uni-lj.si',
     FMF: 'urnik.fmf.uni-lj.si',
-    FKKT: 'www.wise-tt.com/wtt_fkkt',
+    //FKKT: 'www.wise-tt.com/wtt_fkkt',
+    FS: 'urnik.fs.uni-lj.si',
 };
 
 async function get_url() {
@@ -29,13 +32,20 @@ onMounted(get_url);
 <template>
     <Header/>
 
+    <hr class="my-3"/>
+
     <FRI v-if="url.includes(urls.FRI)"/>
     <BF v-else-if="url.includes(urls.BF)"/>
     <FMF v-else-if="url.includes(urls.FMF)"/>
-    <FKKT v-else-if="url.includes(urls.FKKT)"/>
+    <!--<FKKT v-else-if="url.includes(urls.FKKT)"/>-->
+    <FS v-else-if="url.includes(urls.FS)"/>
     <Unsupported v-else/>
 
-    <!--<Footer/>-->
+    <!--
+    <hr class="my-3"/>
+
+    <Footer/>
+    -->
 </template>
 
 <style scoped>
