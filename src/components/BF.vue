@@ -10,7 +10,7 @@ const length_input = ref<number | null>(null);
 const title_input = ref<string>('');
 
 async function add_entry() {
-    if (day_input.value === '' || start_input.value === null || length_input.value === null) return;
+    if (day_input.value === '' || start_input.value === null || length_input.value === null || title_input.value === '') return;
 
     const [tab] = await tabs.query({active: true, currentWindow: true});
 
@@ -60,8 +60,8 @@ async function add_entry() {
                     <input v-model="title_input" type="text" class="form-control" placeholder="Title" required>
                 </div>
                 <div class="d-flex align-items-center gap-2 mt-2">
-                    <input v-model="start_input" type="number" class="form-control" min="7" max="21" placeholder="Start" required>
-                    <input v-model="length_input" type="number" class="form-control" min="1" max="15" placeholder="Length" required>
+                    <input v-model="start_input" type="number" class="form-control" min="7" max="20" step="0.5" placeholder="Start" required>
+                    <input v-model="length_input" type="number" class="form-control" min="1" max="14" step="0.5" placeholder="Length" required>
                     <button type="submit" class="btn btn-primary" @click="add_entry">Add</button>
                 </div>
             </form>

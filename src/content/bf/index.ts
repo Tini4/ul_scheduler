@@ -86,7 +86,7 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                     </div>
                 </div>`;
 
-                div.insertAdjacentHTML('beforeend', entry);
+                div.insertAdjacentHTML('afterbegin', entry);
             }
         }
     }
