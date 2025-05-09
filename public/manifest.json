@@ -1,11 +1,16 @@
 {
   "manifest_version": 3,
   "name": "UL scheduler",
-  "version": "0.2.3.0",
+  "version": "0.2.3.1",
   "description": "Create your schedule for University of Ljubljana.",
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ulscheduler@example.tini4"
+    }
   },
   "host_permissions": [
     "https://urnik.fri.uni-lj.si/*",
