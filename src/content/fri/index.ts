@@ -54,79 +54,86 @@ async function run() {
             entry.innerText = m[1];
         }
     });
+
+    browser.runtime.onMessage.addListener((msg: unknown) => {
+        if (typeof msg === 'object' && msg !== null && 'type' in msg) {
+            if (msg.type == 'redirect') {
+                const typed_msg = msg as {
+                    type: string;
+                    payload: {
+                        url: string;
+                    };
+                };
+                const {url} = typed_msg.payload;
+
+                window.location.href = url;
+            }
+
+            if (msg.type === 'add_entry') {
+                const typed_msg = msg as {
+                    type: string;
+                    payload: {
+                        color: string;
+                        day_ix: number;
+                        start: number;
+                        length: number;
+                        title: string;
+                        teacher: string;
+                        classroom: string;
+                    };
+                };
+                const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
+                let day;
+                switch (day_ix) {
+                    case 0:
+                        day = 'MON';
+                        break;
+                    case 1:
+                        day = 'TUE';
+                        break;
+                    case 2:
+                        day = 'WED';
+                        break;
+                    case 3:
+                        day = 'THU';
+                        break;
+                    case 4:
+                        day = 'FRI';
+                        break;
+                }
+
+                const div = document.querySelector<HTMLDivElement>(`div[style="grid-area: day${day}"]`)
+                if (div) {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = `
+                    <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color+'7f'}">
+                        <div class="description">
+                            <div class="top-aligned">
+                                <div class="row">
+                                    <a class="link-subject" href="">${title}</a>
+                                    <span class="entry-type"></span>
+                                    <div class="entry-hover"></div>
+                                </div>
+                                <div class="row"><a class="link-classroom" href="">${classroom}</a></div>
+                                <div class="row"><a class="link-teacher" href="">${teacher}</a></div>
+                            </div>
+                        </div>
+                    </div>`;
+                    const entry = temp.firstElementChild as HTMLDivElement;
+
+                    entry.addEventListener('click', (event) => {
+                        const div = event.currentTarget as HTMLDivElement;
+
+                        deleted.push(div);
+                        div.style.display = 'none';
+                    });
+
+                    div.prepend(entry);
+                }
+            }
+        }
+    });
 }
 
 run().then(() => {
-});
-
-browser.runtime.onMessage.addListener((msg: unknown) => {
-    if (typeof msg === 'object' && msg !== null && 'type' in msg) {
-        if (msg.type == 'redirect') {
-            const typed_msg = msg as {
-                type: string;
-                payload: {
-                    url: string;
-                };
-            };
-            const {url} = typed_msg.payload;
-
-            window.location.href = url;
-        }
-
-        if (msg.type === 'add_entry') {
-            const typed_msg = msg as {
-                type: string;
-                payload: {
-                    color: string;
-                    day_ix: number;
-                    start: number;
-                    length: number;
-                    title: string;
-                    teacher: string;
-                    classroom: string;
-                };
-            };
-            const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
-            let day;
-            switch (day_ix) {
-                case 0:
-                    day = 'MON';
-                    break;
-                case 1:
-                    day = 'TUE';
-                    break;
-                case 2:
-                    day = 'WED';
-                    break;
-                case 3:
-                    day = 'THU';
-                    break;
-                case 4:
-                    day = 'FRI';
-                    break;
-            }
-
-            const div = document.querySelector<HTMLDivElement>(`div[style="grid-area: day${day}"]`)
-            if (div) {
-                const entry = `
-                <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color+'7f'}">
-                    <div class="description">
-                        <div class="top-aligned">
-                            <div class="row">
-                                <a class="link-subject" href="">${title}</a>
-                                <span class="entry-type"></span>
-                                <div class="entry-hover"></div>
-                            </div>
-                            <div class="row"><a class="link-classroom" href="">${classroom}</a></div>
-                            <div class="row"><a class="link-teacher" href="">${teacher}</a></div>
-                        </div>
-                    </div>
-                </div>`;
-
-                div.insertAdjacentHTML('afterbegin', entry);
-
-                // TODO: Add onEventListener click
-            }
-        }
-    }
 });

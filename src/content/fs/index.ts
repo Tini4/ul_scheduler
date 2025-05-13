@@ -46,52 +46,61 @@ async function run() {
     document.querySelectorAll<HTMLSpanElement>('span.layer_one').forEach((entry) => {
         entry.remove();
     });
+
+    browser.runtime.onMessage.addListener((msg: unknown) => {
+        if (typeof msg === 'object' && msg !== null && 'type' in msg) {
+            if (msg.type === 'add_entry') {
+                const typed_msg = msg as {
+                    type: string;
+                    payload: {
+                        color: string;
+                        day_ix: number;
+                        start: number;
+                        length: number;
+                        title: string;
+                        teacher: string;
+                        classroom: string;
+                    };
+                };
+                const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
+                const day = day_ix;
+
+                const div = document.querySelector<HTMLDivElement>(`div#entries`)
+                if (div) {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = `
+                    <div class="entry-absolute-box leftmost rightmost" style="left: ${day*20}%; width: 20.00%; top: ${(start-7)*7.695}%; height: ${length*7.695}%;">
+                        <div class="entry" style="background-color: ${color+'7f'}">
+                        <div class="main-box">
+                            <span class="subject">
+                                <a href="">${title}</a>
+                                <span class="entry-type"></span>
+                            </span>
+                            <br>
+                        </div>
+                        <div class="teacher">
+                            <a href="">${teacher}</a>
+                        </div>
+                        <div class="classroom">
+                            <a href="">${classroom}</a>
+                        </div>
+                        </div>
+                    </div>`;
+                    const entry = temp.firstElementChild as HTMLDivElement;
+
+                    entry.addEventListener('click', (event) => {
+                        const div = event.currentTarget as HTMLDivElement;
+
+                        deleted.push(div);
+                        div.style.display = 'none';
+                    });
+
+                    div.prepend(entry);
+                }
+            }
+        }
+    });
 }
 
 run().then(() => {
-});
-
-browser.runtime.onMessage.addListener((msg: unknown) => {
-    if (typeof msg === 'object' && msg !== null && 'type' in msg) {
-        if (msg.type === 'add_entry') {
-            const typed_msg = msg as {
-                type: string;
-                payload: {
-                    color: string;
-                    day_ix: number;
-                    start: number;
-                    length: number;
-                    title: string;
-                    teacher: string;
-                    classroom: string;
-                };
-            };
-            const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
-            const day = day_ix;
-
-            const div = document.querySelector<HTMLDivElement>(`div#entries`)
-            if (div) {
-                const entry = `
-                <div class="entry-absolute-box leftmost rightmost" style="left: ${day*20}%; width: 20.00%; top: ${(start-7)*7.695}%; height: ${length*7.695}%;">
-                    <div class="entry" style="background-color: ${color+'7f'}">
-                    <div class="main-box">
-                        <span class="subject">
-                            <a href="">${title}</a>
-                            <span class="entry-type"></span>
-                        </span>
-                        <br>
-                    </div>
-                    <div class="teacher">
-                        <a href="">${teacher}</a>
-                    </div>
-                    <div class="classroom">
-                        <a href="">${classroom}</a>
-                    </div>
-                    </div>
-                </div>`;
-
-                div.insertAdjacentHTML('afterbegin', entry);
-            }
-        }
-    }
 });
