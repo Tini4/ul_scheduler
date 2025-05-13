@@ -82,9 +82,11 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                     start: number;
                     length: number;
                     title: string;
+                    teacher: string;
+                    classroom: string;
                 };
             };
-            const {color, day_ix, start, length, title} = typed_msg.payload;
+            const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
             let day;
             switch (day_ix) {
                 case 0:
@@ -115,13 +117,15 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                                 <span class="entry-type"></span>
                                 <div class="entry-hover"></div>
                             </div>
-                            <div class="row"><a class="link-classroom" href=""></a></div>
-                            <div class="row"><a class="link-teacher" href=""></a></div>
+                            <div class="row"><a class="link-classroom" href="">${classroom}</a></div>
+                            <div class="row"><a class="link-teacher" href="">${teacher}</a></div>
                         </div>
                     </div>
                 </div>`;
 
                 div.insertAdjacentHTML('afterbegin', entry);
+
+                // TODO: Add onEventListener click
             }
         }
     }

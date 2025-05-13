@@ -62,9 +62,11 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                     start: number;
                     length: number;
                     title: string;
+                    teacher: string;
+                    classroom: string;
                 };
             };
-            const {color, day_ix, start, length, title} = typed_msg.payload;
+            const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
             const day = day_ix;
 
             const div = document.querySelector<HTMLDivElement>(`div#entries`)
@@ -80,10 +82,10 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                         <br>
                     </div>
                     <div class="teacher">
-                        <a href=""></a>
+                        <a href="">${teacher}</a>
                     </div>
                     <div class="classroom">
-                        <a href=""></a>
+                        <a href="">${classroom}</a>
                     </div>
                     </div>
                 </div>`;
