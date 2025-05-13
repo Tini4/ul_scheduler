@@ -78,13 +78,31 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                 type: string;
                 payload: {
                     color: string;
-                    day: string;
+                    day_ix: number;
                     start: number;
                     length: number;
                     title: string;
                 };
             };
-            const {color, day, start, length, title} = typed_msg.payload;
+            const {color, day_ix, start, length, title} = typed_msg.payload;
+            let day;
+            switch (day_ix) {
+                case 0:
+                    day = 'MON';
+                    break;
+                case 1:
+                    day = 'TUE';
+                    break;
+                case 2:
+                    day = 'WED';
+                    break;
+                case 3:
+                    day = 'THU';
+                    break;
+                case 4:
+                    day = 'FRI';
+                    break;
+            }
 
             const div = document.querySelector<HTMLDivElement>(`div[style="grid-area: day${day}"]`)
             if (div) {

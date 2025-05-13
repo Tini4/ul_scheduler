@@ -58,13 +58,14 @@ browser.runtime.onMessage.addListener((msg: unknown) => {
                 type: string;
                 payload: {
                     color: string;
-                    day: number;
+                    day_ix: number;
                     start: number;
                     length: number;
                     title: string;
                 };
             };
-            const {color, day, start, length, title} = typed_msg.payload;
+            const {color, day_ix, start, length, title} = typed_msg.payload;
+            const day = day_ix;
 
             const div = document.querySelector<HTMLDivElement>(`div#entries`)
             if (div) {
