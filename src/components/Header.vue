@@ -2,7 +2,7 @@
 import {onMounted, ref, watch} from 'vue';
 import {storage, tabs} from 'webextension-polyfill';
 
-const enabled = ref<boolean>(true);
+const enabled = ref<boolean>(false);
 const refresh_visible = ref<boolean>(true);
 
 async function get_enabled() {

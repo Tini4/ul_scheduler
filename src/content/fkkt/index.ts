@@ -1,7 +1,8 @@
 async function run() {
     const res = await browser.storage.local.get('enabled');
+    const enabled = (res.enabled as boolean) ?? true;
 
-    if (res.enabled !== true) return;
+    if (!enabled) return;
 
     const deleted: HTMLDivElement[] = [];
 
