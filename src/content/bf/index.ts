@@ -60,9 +60,10 @@ async function run() {
                         title: string;
                         teacher: string;
                         classroom: string;
+                        type_: string;
                     };
                 };
-                const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
+                const {color, day_ix, start, length, title, teacher, classroom, type_} = typed_msg.payload;
                 const day = day_ix;
 
                 const div = document.querySelector<HTMLDivElement>(`div#entries`)
@@ -74,7 +75,7 @@ async function run() {
                         <div class="main-box">
                             <span class="subject">
                                 <a href="">${title}</a>
-                                <span class="entry-type"></span>
+                                <span class="entry-type">${type_}</span>
                             </span>
                             <br>
                         </div>

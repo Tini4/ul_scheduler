@@ -10,13 +10,14 @@ const {step = 1, start_min, start_max} = defineProps<{
 
 const add_enabled = ref<boolean>(false);
 
-const color_input = ref<string>('#ff7fff');
+const color_input = ref<string>('#ff0000');
 const day_input = ref<string>('');
 const start_input = ref<number | null>(null);
 const length_input = ref<number | null>(null);
 const title_input = ref<string>('');
 const teacher_input = ref<string>('');
 const classroom_input = ref<string>('');
+const type_input = ref<string>('');
 
 async function add_entry() {
     if (day_input.value === '' || start_input.value === null || length_input.value === null || title_input.value === '') return;
@@ -33,6 +34,7 @@ async function add_entry() {
             title: title_input.value,
             teacher: teacher_input.value,
             classroom: classroom_input.value,
+            type_: type_input.value,
         },
     });
 }
@@ -50,7 +52,7 @@ async function add_entry() {
     <div v-if="add_enabled">
         <form>
             <div class="d-flex align-items-center gap-2 mt-2">
-                <input v-model="color_input" type="color" class="form-control form-control-color" value="#563d7c" required>
+                <input v-model="color_input" type="color" class="form-control form-control-color" required>
                 <select v-model="day_input" class="form-select w-auto" required>
                     <option value="" disabled>Day</option>
                     <option value="0">Mon</option>
@@ -70,7 +72,8 @@ async function add_entry() {
             <h6 class="fst-italic m-1">Optional</h6>
             <div class="d-flex align-items-center gap-2 mt-2">
                 <input v-model="teacher_input" type="text" class="form-control" placeholder="Teacher">
-                <input v-model="classroom_input" type="text" class="form-control" placeholder="Classroom">
+                <input v-model="classroom_input" type="text" class="form-control w-75" placeholder="Classroom">
+                <input v-model="type_input" type="text" class="form-control w-50" placeholder="Type">
             </div>
         </form>
     </div>

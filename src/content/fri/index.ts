@@ -80,9 +80,10 @@ async function run() {
                         title: string;
                         teacher: string;
                         classroom: string;
+                        type_: string;
                     };
                 };
-                const {color, day_ix, start, length, title, teacher, classroom} = typed_msg.payload;
+                const {color, day_ix, start, length, title, teacher, classroom, type_} = typed_msg.payload;
                 let day;
                 switch (day_ix) {
                     case 0:
@@ -111,7 +112,7 @@ async function run() {
                             <div class="top-aligned">
                                 <div class="row">
                                     <a class="link-subject" href="">${title}</a>
-                                    <span class="entry-type"></span>
+                                    <span class="entry-type">${type_ ? '| '+type_ : ''}</span>
                                     <div class="entry-hover"></div>
                                 </div>
                                 <div class="row"><a class="link-classroom" href="">${classroom}</a></div>
