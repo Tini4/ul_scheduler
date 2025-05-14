@@ -65,11 +65,9 @@ watch(subjects_input, set_subjects);
                 <input v-model="url_enabled" type="checkbox" class="form-check-input m-0" role="switch" checked>
             </div>
         </div>
-        <div v-if="url_enabled" class="mt-2">
-            <div class="input-group">
-                <input v-model="subjects_input" type="text" class="form-control" placeholder="Enter subject IDs">
-                <button class="btn btn-outline-secondary" type="button" @click="redirect_tab">Go</button>
-            </div>
+        <div v-if="url_enabled" class="mt-2 d-flex align-items-center gap-2 pb-1">
+            <input v-model="subjects_input" type="text" class="form-control" placeholder="Enter subject IDs">
+            <button class="btn btn-primary" type="button" @click="redirect_tab">Go</button>
         </div>
 
         <hr class="my-3"/>

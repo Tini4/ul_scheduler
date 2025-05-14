@@ -49,7 +49,7 @@ async function add_entry() {
             <input v-model="add_enabled" type="checkbox" class="form-check-input m-0" role="switch" checked>
         </div>
     </div>
-    <div v-if="add_enabled">
+    <div v-if="add_enabled" class="pb-1">
         <form>
             <div class="d-flex align-items-center gap-2 mt-2">
                 <input v-model="color_input" type="color" class="form-control form-control-color" required>
