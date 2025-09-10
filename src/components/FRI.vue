@@ -62,17 +62,18 @@ watch(subjects_input, set_subjects);
                 <h5 class="m-0">Generate link</h5>
             </div>
             <div class="form-check form-switch p-0 m-0 d-flex align-items-center justify-content-center ms-auto">
-                <input v-model="url_enabled" type="checkbox" class="form-check-input m-0" role="switch" checked>
+                <input v-model="url_enabled" checked class="form-check-input m-0" role="switch" type="checkbox">
             </div>
         </div>
         <div v-if="url_enabled" class="mt-2 d-flex align-items-center gap-2 pb-1">
-            <input v-model="subjects_input" type="text" class="form-control" placeholder="Enter subject IDs">
+            <input v-model="subjects_input" class="form-control" placeholder="Subject IDs (e.g., 123 456 789)"
+                   type="text">
             <button class="btn btn-primary" type="button" @click="redirect_tab">Go</button>
         </div>
 
         <hr class="my-3"/>
 
-        <AddEntry :start_min="7" :start_max="21"/>
+        <AddEntry :start_max="21" :start_min="7"/>
     </main>
 </template>
 

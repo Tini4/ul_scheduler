@@ -48,10 +48,16 @@ async function run() {
 
     // Rename subjects
     document.querySelectorAll<HTMLAnchorElement>('a.link-subject').forEach((entry) => {
-        const m = entry.innerText.match(/^(.*?)(?:\(.*\))?_.*$/);
+        const m = entry.innerText.match(/^(.*?)(\(.*\))?_.*$/);
 
         if (m) {
-            entry.innerText = m[1];
+            if (m[1]) {
+                entry.innerText = m[1];
+            } else if (m[2]) {
+                entry.innerText = m[2];
+            } else {
+                entry.innerText = '_';
+            }
         }
     });
 
@@ -107,12 +113,12 @@ async function run() {
                 if (div) {
                     const temp = document.createElement('div');
                     temp.innerHTML = `
-                    <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color+'b3'}">
+                    <div class="grid-entry" style="grid-row: ${start - 6} / span ${length}; background-color: ${color + 'b3'}">
                         <div class="description">
                             <div class="top-aligned">
                                 <div class="row">
                                     <a class="link-subject" href="">${title}</a>
-                                    <span class="entry-type">${type_ ? '| '+type_ : ''}</span>
+                                    <span class="entry-type">${type_ ? '| ' + type_ : ''}</span>
                                     <div class="entry-hover"></div>
                                 </div>
                                 <div class="row"><a class="link-classroom" href="">${classroom}</a></div>

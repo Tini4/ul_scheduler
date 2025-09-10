@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Pickr from "./Pickr.vue";
 
-import {ref, defineProps} from 'vue';
+import {defineProps, ref} from 'vue';
 import {tabs} from 'webextension-polyfill';
 
 const {step = 1, start_min, start_max} = defineProps<{
@@ -12,7 +12,7 @@ const {step = 1, start_min, start_max} = defineProps<{
 
 const add_enabled = ref<boolean>(false);
 
-const color_input = ref<string>('#ff0000');
+const color_input = ref<string>('#ec8a7f');
 const day_input = ref<string>('');
 const start_input = ref<number | null>(null);
 const length_input = ref<number | null>(null);
@@ -48,7 +48,7 @@ async function add_entry() {
             <h5 class="m-0">Add entry</h5>
         </div>
         <div class="form-check form-switch p-0 m-0 d-flex align-items-center justify-content-center ms-auto">
-            <input v-model="add_enabled" type="checkbox" class="form-check-input m-0" role="switch" checked>
+            <input v-model="add_enabled" checked class="form-check-input m-0" role="switch" type="checkbox">
         </div>
     </div>
     <div v-if="add_enabled" class="pb-1">
@@ -56,26 +56,28 @@ async function add_entry() {
             <div class="d-flex align-items-center gap-2 mt-2">
                 <Pickr v-model="color_input"/>
                 <select v-model="day_input" class="form-select w-auto" required>
-                    <option value="" disabled>Day</option>
+                    <option disabled value="">Day</option>
                     <option value="0">Mon</option>
                     <option value="1">Tue</option>
                     <option value="2">Wed</option>
                     <option value="3">Thu</option>
                     <option value="4">Fri</option>
                 </select>
-                <input v-model="title_input" type="text" class="form-control" placeholder="Title" required>
+                <input v-model="title_input" class="form-control" placeholder="Title" required type="text">
             </div>
             <div class="d-flex align-items-center gap-2 mt-2">
-                <input v-model="start_input" type="number" class="form-control" :min="start_min" :max="start_max" :step="step" placeholder="Start" required>
-                <input v-model="length_input" type="number" class="form-control" :min="step" :step="step" placeholder="Length" required>
-                <button @click="add_entry" type="submit" class="btn btn-primary">Add</button>
+                <input v-model="start_input" :max="start_max" :min="start_min" :step="step" class="form-control"
+                       placeholder="Start" required type="number">
+                <input v-model="length_input" :min="step" :step="step" class="form-control" placeholder="Length"
+                       required type="number">
+                <button class="btn btn-primary" type="submit" @click="add_entry">Add</button>
             </div>
 
             <h6 class="fst-italic m-1">Optional</h6>
             <div class="d-flex align-items-center gap-2 mt-2">
-                <input v-model="teacher_input" type="text" class="form-control" placeholder="Teacher">
-                <input v-model="classroom_input" type="text" class="form-control w-75" placeholder="Classroom">
-                <input v-model="type_input" type="text" class="form-control w-50" placeholder="Type">
+                <input v-model="teacher_input" class="form-control" placeholder="Teacher" type="text">
+                <input v-model="classroom_input" class="form-control w-75" placeholder="Classroom" type="text">
+                <input v-model="type_input" class="form-control w-50" placeholder="Type" type="text">
             </div>
         </form>
     </div>

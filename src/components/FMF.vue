@@ -10,7 +10,7 @@ import AddEntry from "./AddEntry.vue";
 
         <hr class="my-3"/>
 
-        <AddEntry :start_min="7" :start_max="19" :step="0.5"/>
+        <AddEntry :start_max="19" :start_min="7" :step="0.5"/>
     </main>
 </template>
 

@@ -70,8 +70,8 @@ async function run() {
                 if (div) {
                     const temp = document.createElement('div');
                     temp.innerHTML = `
-                    <div class="entry-absolute-box leftmost rightmost" style="left: ${day*20}%; width: 20.00%; top: ${(start-7)*7.145}%; height: ${length*7.145}%;">
-                        <div class="entry" style="background-color: ${color+'7f'}">
+                    <div class="entry-absolute-box leftmost rightmost" style="left: ${day * 20}%; width: 20.00%; top: ${(start - 7) * 7.145}%; height: ${length * 7.145}%;">
+                        <div class="entry" style="background-color: ${color + '7f'}">
                         <div class="main-box">
                             <span class="subject">
                                 <a href="">${title}</a>
