@@ -107,7 +107,7 @@ async function run() {
                 if (div) {
                     const temp = document.createElement('div');
                     temp.innerHTML = `
-                    <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color+'7f'}">
+                    <div class="grid-entry" style="grid-row: ${start-6} / span ${length}; background-color: ${color+'b3'}">
                         <div class="description">
                             <div class="top-aligned">
                                 <div class="row">

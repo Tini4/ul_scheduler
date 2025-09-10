@@ -1,11 +1,10 @@
 body {
     margin: 0;
     padding: 0;
-    width: 350px;
+    width: 370px;
 }
 
 #app {
-    max-width: 1280px;
     margin: 0 auto;
     padding: 1rem;
 }

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import Pickr from "./Pickr.vue";
+
 import {ref, defineProps} from 'vue';
 import {tabs} from 'webextension-polyfill';
 
@@ -52,7 +54,7 @@ async function add_entry() {
     <div v-if="add_enabled" class="pb-1">
         <form>
             <div class="d-flex align-items-center gap-2 mt-2">
-                <input v-model="color_input" type="color" class="form-control form-control-color" required>
+                <Pickr v-model="color_input"/>
                 <select v-model="day_input" class="form-select w-auto" required>
                     <option value="" disabled>Day</option>
                     <option value="0">Mon</option>
