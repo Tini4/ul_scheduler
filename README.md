@@ -1,6 +1,6 @@
 # UL scheduler
 
-A browser extension to help with scheduling at University of Ljubljana.
+A browser extension to help with scheduling at the University of Ljubljana.
 
 ## Supported faculties
 
