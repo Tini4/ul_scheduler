@@ -29,6 +29,12 @@ jobs:
     - name: Build with Vite
       run: npm run build
 
+    - name: Upload dist folder
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/
+
     # Optional: Run tests if you have them
     # - name: Run tests
     #   run: npm test
