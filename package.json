@@ -25,6 +25,7 @@
     "postcss": "^8.5.3",
     "postcss-mixins": "12.1.2",
     "postcss-nested": "^7.0.2",
+    "terser": "^5.44.0",
     "tsx": "^4.19.3",
     "typescript": "~5.7.2",
     "vite": "7.1.5",
