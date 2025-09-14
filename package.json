@@ -18,16 +18,16 @@
   "devDependencies": {
     "@types/postcss-mixins": "^9.0.6",
     "@types/webextension-polyfill": "^0.12.3",
-    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue": "6.0.1",
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.6",
     "postcss": "^8.5.3",
-    "postcss-mixins": "^11.0.3",
+    "postcss-mixins": "12.1.2",
     "postcss-nested": "^7.0.2",
     "tsx": "^4.19.3",
     "typescript": "~5.7.2",
-    "vite": "6.3.5",
+    "vite": "7.1.5",
     "vue-tsc": "^2.2.4",
     "webextension-polyfill": "^0.12.0"
   }
