@@ -1,11 +1,14 @@
+/* Disable mouseclick for columns */
 .grid-complete-row {
     pointer-events: none;
 }
 
+/* Re-enable mouseclick for entries */
 .grid-entry {
     pointer-events: auto;
 }
 
+/* Offset hour display onto the line */
 .grid-hour {
     text-align: center;
     position: relative;
@@ -13,6 +16,12 @@
     background: inherit;
 }
 
+/* Remove lines from hour display */
 .grid-complete-row {
     grid-column: 2 / -1 !important;
 }
+
+/* Fix width for multiple entries at the same time slot, but may make schedule higher */
+/*.grid-entry .description {
+    width: 100px;
+}*/
