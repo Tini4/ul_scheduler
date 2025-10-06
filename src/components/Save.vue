@@ -36,6 +36,8 @@ async function save_schedule() {
 
         schedules.value.set(name_input.value, html);
 
+        name_input.value = '';
+
         await set_schedules();
     }
 }

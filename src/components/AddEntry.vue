@@ -41,6 +41,14 @@ async function add_entry() {
                 type_: type_input.value,
             },
         });
+
+        day_input.value = '';
+        start_input.value = null;
+        length_input.value = null;
+        title_input.value = '';
+        teacher_input.value = '';
+        classroom_input.value = '';
+        type_input.value = '';
     }
 }
 </script>

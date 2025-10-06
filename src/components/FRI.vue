@@ -45,6 +45,8 @@ async function add_subject() {
 
     subjects.value.add(id_input.value);
 
+    id_input.value = null;
+
     await set_subjects();
 }
 
