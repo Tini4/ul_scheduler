@@ -47,7 +47,7 @@ async function run() {
         entry.remove();
     });
 
-    browser.runtime.onMessage.addListener((msg: unknown) => {
+    browser.runtime.onMessage.addListener(async (msg: unknown) => {
         if (typeof msg === 'object' && msg !== null && 'type' in msg) {
             if (msg.type === 'add_entry') {
                 const typed_msg = msg as {
@@ -98,6 +98,37 @@ async function run() {
 
                     div.prepend(entry);
                 }
+            }
+
+            if (msg.type === 'save_schedule') {
+                return {
+                    success: true,
+                    payload: {
+                        html: document.body.innerHTML,
+                    }
+                }
+            }
+
+            if (msg.type === 'load_schedule') {
+                const typed_msg = msg as {
+                    type: string;
+                    payload: {
+                        html: string;
+                    };
+                };
+                const {html} = typed_msg.payload;
+
+                document.body.innerHTML = html;
+
+                // Listen for clicks on entries
+                document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach((entry) => {
+                    entry.addEventListener('click', (event) => {
+                        const div = event.currentTarget as HTMLDivElement;
+
+                        deleted.push(div);
+                        div.style.display = 'none';
+                    });
+                });
             }
         }
     });

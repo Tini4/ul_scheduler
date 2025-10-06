@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import AddEntry from "./AddEntry.vue";
+import Save from "./Save.vue";
 
 import {onMounted, ref, watch} from 'vue';
 import {storage, tabs} from 'webextension-polyfill';
@@ -18,9 +19,8 @@ async function set_subjects() {
 }
 
 function get_query(): string {
-    const subjects: number[] = subjects_input.value.trim().split(/\s+/).map(i => parseInt(i, 10));
-
-    if (subjects.length === 0) return '';
+    const subjects: number[] = subjects_input.value
+        .trim().split(/\s+/).map(i => parseInt(i, 10)).filter(i => !isNaN(i));
 
     return subjects.map(subj => `subject=${subj}`).join('&');
 }
@@ -74,6 +74,10 @@ watch(subjects_input, set_subjects);
         <hr class="my-3"/>
 
         <AddEntry :start_max="21" :start_min="7"/>
+
+        <hr class="my-3"/>
+
+        <Save/>
     </main>
 </template>
 

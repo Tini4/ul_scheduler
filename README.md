@@ -9,6 +9,15 @@ A browser extension to help with scheduling at the University of Ljubljana.
 - FRI
 - FS
 
+## Features
+
+- GUI fixes
+- Entry removal
+- Undo with Ctrl+Z
+- Link generation (FRI)
+- Adding entries
+- **New** in 1.1.x: Schedule saving
+
 ## Warning
 
 Modification of the schedule is done in your browser.

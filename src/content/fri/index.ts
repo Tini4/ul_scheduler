@@ -61,7 +61,7 @@ async function run() {
         }
     });
 
-    browser.runtime.onMessage.addListener((msg: unknown) => {
+    browser.runtime.onMessage.addListener(async (msg: unknown) => {
         if (typeof msg === 'object' && msg !== null && 'type' in msg) {
             if (msg.type == 'redirect') {
                 const typed_msg = msg as {
@@ -90,24 +90,7 @@ async function run() {
                     };
                 };
                 const {color, day_ix, start, length, title, teacher, classroom, type_} = typed_msg.payload;
-                let day;
-                switch (day_ix) {
-                    case 0:
-                        day = 'MON';
-                        break;
-                    case 1:
-                        day = 'TUE';
-                        break;
-                    case 2:
-                        day = 'WED';
-                        break;
-                    case 3:
-                        day = 'THU';
-                        break;
-                    case 4:
-                        day = 'FRI';
-                        break;
-                }
+                const day = ['MON', 'TUE', 'WED', 'THU', 'FRI'][day_ix];
 
                 const div = document.querySelector<HTMLDivElement>(`div[style="grid-area: day${day}"]`)
                 if (div) {
@@ -137,6 +120,37 @@ async function run() {
 
                     div.prepend(entry);
                 }
+            }
+
+            if (msg.type === 'save_schedule') {
+                return {
+                    success: true,
+                    payload: {
+                        html: document.body.innerHTML,
+                    }
+                }
+            }
+
+            if (msg.type === 'load_schedule') {
+                const typed_msg = msg as {
+                    type: string;
+                    payload: {
+                        html: string;
+                    };
+                };
+                const {html} = typed_msg.payload;
+
+                document.body.innerHTML = html;
+
+                // Listen for clicks on entries
+                document.querySelectorAll<HTMLDivElement>('div.grid-entry').forEach((entry) => {
+                    entry.addEventListener('click', (event) => {
+                        const div = event.currentTarget as HTMLDivElement;
+
+                        deleted.push(div);
+                        div.style.display = 'none';
+                    });
+                });
             }
         }
     });
