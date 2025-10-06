@@ -7,14 +7,13 @@ const schedules = ref<Map<string, string>>(new Map());
 const name_input = ref<string>('');
 
 async function get_schedules() {
-    const res = await storage.local.get("schedules");
+    const res = await storage.local.get('schedules');
 
     schedules.value = new Map(Object.entries(res.schedules ?? {}));
 }
 
 async function set_schedules() {
-    const obj = Object.fromEntries(schedules.value.entries());
-    await storage.local.set({schedules: obj});
+    await storage.local.set({schedules: Object.fromEntries(schedules.value.entries())});
 }
 
 async function save_schedule() {
