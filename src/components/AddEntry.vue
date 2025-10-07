@@ -21,7 +21,10 @@ const teacher_input = ref<string>('');
 const classroom_input = ref<string>('');
 const type_input = ref<string>('');
 
-async function add_entry() {
+async function add_entry(event: Event) {
+    const form = event.target as HTMLFormElement;
+    form.classList.add('was-validated');
+
     if (day_input.value === '' || start_input.value === null || length_input.value === null || title_input.value === '')
         return;
 
@@ -49,6 +52,7 @@ async function add_entry() {
         teacher_input.value = '';
         classroom_input.value = '';
         type_input.value = '';
+        form.classList.remove('was-validated');
     }
 }
 </script>
@@ -63,7 +67,7 @@ async function add_entry() {
         </div>
     </div>
     <div v-if="add_enabled" class="pb-1">
-        <form @submit.prevent>
+        <form class="needs-validation" novalidate @submit.prevent="add_entry">
             <div class="d-flex align-items-center gap-2 mt-2">
                 <Pickr v-model="color_input"/>
                 <select v-model="day_input" class="form-select w-auto" required>
@@ -81,7 +85,7 @@ async function add_entry() {
                        placeholder="Start" required type="number">
                 <input v-model="length_input" :min="step" :step="step" class="form-control" placeholder="Length"
                        required type="number">
-                <button class="btn btn-primary" type="submit" @click="add_entry">Add</button>
+                <button class="btn btn-primary" type="submit">Add</button>
             </div>
 
             <h6 class="fst-italic m-1">Optional</h6>

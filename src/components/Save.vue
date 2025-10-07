@@ -16,7 +16,10 @@ async function set_schedules() {
     await storage.local.set({schedules: Object.fromEntries(schedules.value.entries())});
 }
 
-async function save_schedule() {
+async function save_schedule(event: Event) {
+    const form = event.target as HTMLFormElement;
+    form.classList.add('was-validated');
+
     if (name_input.value === '')
         return;
 
@@ -37,6 +40,7 @@ async function save_schedule() {
         schedules.value.set(name_input.value, html);
 
         name_input.value = '';
+        form.classList.remove('was-validated');
 
         await set_schedules();
     }
@@ -74,10 +78,10 @@ onMounted(get_schedules);
         </div>
     </div>
     <div v-if="save_enabled" class="pb-1">
-        <form @submit.prevent>
+        <form class="needs-validation" novalidate @submit.prevent="save_schedule">
             <div class="d-flex align-items-center gap-2 mt-2">
                 <input v-model="name_input" class="form-control" placeholder="Name" required type="text">
-                <button class="btn btn-primary" type="submit" @click="save_schedule">Save</button>
+                <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </form>
         <ul class="list-group mt-2">

@@ -6,8 +6,8 @@ import {onMounted, ref} from 'vue';
 import {storage, tabs} from 'webextension-polyfill';
 
 const url_enabled = ref<boolean>(false);
-const subjects = ref<Set<number>>(new Set());
-const id_input = ref<number | null>(null);
+const subjects = ref<Set<string>>(new Set());
+const id_input = ref<string>('');
 
 async function get_subjects() {
     {
@@ -22,7 +22,7 @@ async function get_subjects() {
             const subjects_old = subjects_input_old
                 .trim().split(/\s+/).map(i => parseInt(i, 10)).filter(i => !isNaN(i));
 
-            subjects.value = new Set(subjects_old);
+            subjects.value = new Set(subjects_old.map(i => i.toString()));
 
             await set_subjects();
 
@@ -32,32 +32,36 @@ async function get_subjects() {
 
     const res = await storage.local.get('subjects');
 
-    subjects.value = new Set(res.subjects as Array<number> ?? []);
+    subjects.value = new Set(res.subjects as Array<string> ?? []);
 }
 
 async function set_subjects() {
     await storage.local.set({subjects: Array.from(subjects.value)});
 }
 
-async function add_subject() {
-    if (id_input.value === null)
+async function add_subject(event: Event) {
+    const form = event.target as HTMLFormElement;
+    form.classList.add('was-validated');
+
+    if (id_input.value === '')
         return;
 
     subjects.value.add(id_input.value);
 
-    id_input.value = null;
+    id_input.value = '';
+    form.classList.remove('was-validated');
 
     await set_subjects();
 }
 
-async function remove_subject(id: number) {
-    subjects.value.delete(id);
+async function remove_subject(id_: string) {
+    subjects.value.delete(id_);
 
     await set_subjects();
 }
 
 function get_query(): string {
-    return Array.from(subjects.value).map(subj => `subject=${subj}`).join('&');
+    return Array.from(subjects.value).map(i => `subject=${i}`).join('&');
 }
 
 async function redirect_tab() {
@@ -100,20 +104,20 @@ onMounted(get_subjects);
             </div>
         </div>
         <div v-if="url_enabled" class="pb-1">
-            <form @submit.prevent>
+            <form class="needs-validation" novalidate @submit.prevent="add_subject">
                 <div class="d-flex align-items-center gap-2 mt-2">
-                    <input v-model="id_input" class="form-control" placeholder="Subject ID" required type="number">
-                    <button class="btn btn-primary" type="submit" @click="add_subject">Add</button>
+                    <input v-model="id_input" class="form-control" placeholder="Subject ID" required type="text">
+                    <button class="btn btn-primary" type="submit">Add</button>
                 </div>
             </form>
             <ul class="list-group mt-2">
-                <li v-for="subj in subjects" :key="subj"
+                <li v-for="subj in Array.from(subjects)" :key="subj"
                     class="list-group-item d-flex justify-content-between align-items-center">
                     <small>{{ subj }}</small>
                     <button class="btn btn-danger btn-sm" type="button" @click="remove_subject(subj)">Remove</button>
                 </li>
             </ul>
-            <button class="btn btn-primary mt-2 w-100" type="submit" @click="redirect_tab">Go</button>
+            <button class="btn btn-primary mt-2 w-100" type="button" @click="redirect_tab">Go</button>
         </div>
 
         <hr class="my-3"/>
