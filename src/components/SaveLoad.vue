@@ -46,14 +46,18 @@ async function save_schedule(event: Event) {
     }
 }
 
-async function load_schedule(html: string) {
+async function load_schedule(name: string) {
     const [tab] = await tabs.query({active: true, currentWindow: true});
+    if (tab?.url !== undefined && tab?.id !== undefined) {
+        const url = new URL(tab.url);
 
-    if (tab?.id !== undefined) {
+        url.search = '';  // TODO?
+        url.searchParams.set('schedule', name);
+
         await tabs.sendMessage(tab.id, {
-            type: 'load_schedule',
+            type: 'redirect',
             payload: {
-                html: html,
+                url: url.toString(),
             },
         });
     }
@@ -85,12 +89,12 @@ onMounted(get_schedules);
             </div>
         </form>
         <ul class="list-group mt-2">
-            <li v-for="[k, v] in Array.from(schedules)" :key="k"
+            <li v-for="name in Array.from(schedules.keys())" :key="name"
                 class="list-group-item d-flex justify-content-between align-items-center">
-                <small>{{ k }}</small>
+                <small>{{ name }}</small>
                 <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-danger btn-sm" type="button" @click="remove_schedule(k)">Remove</button>
-                    <button class="btn btn-primary btn-sm" type="button" @click="load_schedule(v)">Load</button>
+                    <button class="btn btn-danger btn-sm" type="button" @click="remove_schedule(name)">Remove</button>
+                    <button class="btn btn-primary btn-sm" type="button" @click="load_schedule(name)">Load</button>
                 </div>
             </li>
         </ul>

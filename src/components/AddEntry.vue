@@ -29,7 +29,6 @@ async function add_entry(event: Event) {
         return;
 
     const [tab] = await tabs.query({active: true, currentWindow: true});
-
     if (tab?.id !== undefined) {
         await tabs.sendMessage(tab.id, {
             type: 'add_entry',

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AddEntry from "./AddEntry.vue";
-import Save from "./Save.vue";
+import SaveLoad from "./SaveLoad.vue";
 </script>
 
 <template>
@@ -15,7 +15,7 @@ import Save from "./Save.vue";
 
         <hr class="my-3"/>
 
-        <Save/>
+        <SaveLoad/>
     </main>
 </template>
 

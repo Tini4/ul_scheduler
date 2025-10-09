@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AddEntry from "./AddEntry.vue";
-import Save from "./Save.vue";
+import SaveLoad from "./SaveLoad.vue";
 
 import {onMounted, ref} from 'vue';
 import {storage, tabs} from 'webextension-polyfill';
@@ -18,7 +18,6 @@ async function get_subjects() {
         await storage.local.remove('subjects_input');
 
         if (subjects_input_old !== '') {
-
             const subjects_old = subjects_input_old
                 .trim().split(/\s+/).map(i => parseInt(i, 10)).filter(i => !isNaN(i));
 
@@ -71,7 +70,9 @@ async function redirect_tab() {
     if (tab?.url !== undefined && tab?.id !== undefined && query) {
         const url = new URL(tab.url);
         if (!url.pathname.includes('allocations')) {
-            if (!url.pathname.endsWith('/')) url.pathname += '/';
+            if (!url.pathname.endsWith('/')) {
+                url.pathname += '/';
+            }
             url.pathname += 'allocations';
         }
         url.search = query;
@@ -126,7 +127,7 @@ onMounted(get_subjects);
 
         <hr class="my-3"/>
 
-        <Save/>
+        <SaveLoad/>
     </main>
 </template>
 
