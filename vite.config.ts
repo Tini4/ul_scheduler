@@ -10,6 +10,7 @@ export default defineConfig(({}) => {
     return {
         plugins: [vue()],
         build: {
+            minify: 'terser',
             terserOptions: {
                 mangle: false,
             },
