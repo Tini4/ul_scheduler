@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import Pickr from "./Pickr.vue";
-
 import {defineProps, ref} from 'vue';
 import {tabs} from 'webextension-polyfill';
 
+import Pickr from "./Pickr.vue";
+
 const {step = 1, start_min, start_max} = defineProps<{
-    step?: number
-    start_min: number
-    start_max: number
+    step?: number,
+    start_min: number,
+    start_max: number,
 }>();
 
 const add_enabled = ref<boolean>(false);
@@ -21,24 +21,38 @@ const teacher_input = ref<string>('');
 const classroom_input = ref<string>('');
 const type_input = ref<string>('');
 
-async function add_entry() {
-    if (day_input.value === '' || start_input.value === null || length_input.value === null || title_input.value === '') return;
+async function add_entry(event: Event) {
+    const form = event.target as HTMLFormElement;
+    form.classList.add('was-validated');
+
+    if (day_input.value === '' || start_input.value === null || length_input.value === null || title_input.value === '')
+        return;
 
     const [tab] = await tabs.query({active: true, currentWindow: true});
+    if (tab?.id !== undefined) {
+        await tabs.sendMessage(tab.id, {
+            type: 'add_entry',
+            payload: {
+                color: color_input.value,
+                day_ix: parseInt(day_input.value, 10),
+                start: start_input.value,
+                length: length_input.value,
+                title: title_input.value,
+                teacher: teacher_input.value,
+                classroom: classroom_input.value,
+                type_: type_input.value,
+            },
+        });
 
-    if (tab?.id !== undefined) await tabs.sendMessage(tab.id, {
-        type: 'add_entry',
-        payload: {
-            color: color_input.value,
-            day_ix: parseInt(day_input.value, 10),
-            start: start_input.value,
-            length: length_input.value,
-            title: title_input.value,
-            teacher: teacher_input.value,
-            classroom: classroom_input.value,
-            type_: type_input.value,
-        },
-    });
+        day_input.value = '';
+        start_input.value = null;
+        length_input.value = null;
+        title_input.value = '';
+        teacher_input.value = '';
+        classroom_input.value = '';
+        type_input.value = '';
+        form.classList.remove('was-validated');
+    }
 }
 </script>
 
@@ -52,7 +66,7 @@ async function add_entry() {
         </div>
     </div>
     <div v-if="add_enabled" class="pb-1">
-        <form>
+        <form class="needs-validation" novalidate @submit.prevent="add_entry">
             <div class="d-flex align-items-center gap-2 mt-2">
                 <Pickr v-model="color_input"/>
                 <select v-model="day_input" class="form-select w-auto" required>
@@ -66,11 +80,12 @@ async function add_entry() {
                 <input v-model="title_input" class="form-control" placeholder="Title" required type="text">
             </div>
             <div class="d-flex align-items-center gap-2 mt-2">
-                <input v-model="start_input" :max="start_max" :min="start_min" :step="step" class="form-control"
+                <input v-model="start_input" :max="start_max - step" :min="start_min" :step="step" class="form-control"
                        placeholder="Start" required type="number">
-                <input v-model="length_input" :min="step" :step="step" class="form-control" placeholder="Length"
+                <input v-model="length_input" :max="start_max - (start_input ?? 0)" :min="step" :step="step"
+                       class="form-control" placeholder="Length"
                        required type="number">
-                <button class="btn btn-primary" type="submit" @click="add_entry">Add</button>
+                <button class="btn btn-primary" type="submit">Add</button>
             </div>
 
             <h6 class="fst-italic m-1">Optional</h6>

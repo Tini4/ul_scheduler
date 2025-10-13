@@ -4,17 +4,21 @@ import {defineConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 // https://vite.dev/config/
-export default defineConfig({
-    plugins: [vue()],
-    build: {
-        minify: 'terser',
-        terserOptions: {
-            mangle: false,
-        },
-        rollupOptions: {
-            input: {
-                popup: 'src/popup/index.html',
+export default defineConfig(({}) => {
+    console.log(`🧱 Building...`);
+
+    return {
+        plugins: [vue()],
+        build: {
+            minify: 'terser',
+            terserOptions: {
+                mangle: false,
+            },
+            rollupOptions: {
+                input: {
+                    popup: 'src/popup/index.html',
+                },
             },
         },
-    },
+    };
 });

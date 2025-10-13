@@ -1,13 +1,15 @@
 <script lang="ts" setup>
-import {defineModel, onMounted} from 'vue';
+import {defineModel, onMounted, watch} from 'vue';
 
 import '@simonwep/pickr/dist/themes/monolith.min.css';
 import Pickr from '@simonwep/pickr';
 
 const model = defineModel<string>();
 
+let pickr: Pickr;
+
 onMounted(() => {
-    const pickr = Pickr.create({
+    pickr = Pickr.create({
         el: '.pickr-div',
         theme: 'monolith',
         position: 'right-middle',
@@ -31,15 +33,21 @@ onMounted(() => {
 
             interaction: {
                 input: true,
-                save: true
-            }
-        }
+                save: true,
+            },
+        },
     });
 
     pickr.on('save', (color: Pickr.HSVaColor, instance: Pickr) => {
         instance.hide();
         model.value = color.toHEXA().toString();
     });
+});
+
+watch(model, () => {
+    if (pickr && model.value) {
+        pickr.setColor(model.value);
+    }
 });
 </script>
 
