@@ -123,7 +123,7 @@ onMounted(get_subjects);
 
         <hr class="my-3"/>
 
-        <AddEntry :start_max="21" :start_min="7"/>
+        <AddEntry :start_max="22" :start_min="7"/>
 
         <hr class="my-3"/>
 

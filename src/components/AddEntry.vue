@@ -80,9 +80,10 @@ async function add_entry(event: Event) {
                 <input v-model="title_input" class="form-control" placeholder="Title" required type="text">
             </div>
             <div class="d-flex align-items-center gap-2 mt-2">
-                <input v-model="start_input" :max="start_max" :min="start_min" :step="step" class="form-control"
+                <input v-model="start_input" :max="start_max - step" :min="start_min" :step="step" class="form-control"
                        placeholder="Start" required type="number">
-                <input v-model="length_input" :min="step" :step="step" class="form-control" placeholder="Length"
+                <input v-model="length_input" :max="start_max - (start_input ?? 0)" :min="step" :step="step"
+                       class="form-control" placeholder="Length"
                        required type="number">
                 <button class="btn btn-primary" type="submit">Add</button>
             </div>
