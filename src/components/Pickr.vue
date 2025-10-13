@@ -33,9 +33,9 @@ onMounted(() => {
 
             interaction: {
                 input: true,
-                save: true
-            }
-        }
+                save: true,
+            },
+        },
     });
 
     pickr.on('save', (color: Pickr.HSVaColor, instance: Pickr) => {

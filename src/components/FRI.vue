@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import AddEntry from "./AddEntry.vue";
-import SaveLoad from "./SaveLoad.vue";
-
 import {onMounted, ref} from 'vue';
 import {storage, tabs} from 'webextension-polyfill';
+
+import AddEntry from "./AddEntry.vue";
+import SaveLoad from "./SaveLoad.vue";
 
 const url_enabled = ref<boolean>(false);
 const subjects = ref<Set<string>>(new Set());

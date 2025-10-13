@@ -1,69 +1,30 @@
-import {runtime, storage} from "webextension-polyfill";
+import {
+    add_entries_click_listener,
+    add_undo_listener,
+    get_enabled,
+    get_save_schedule_response,
+    load_saved_schedule,
+    process_redirect,
+    remove_elements
+} from "../common.ts";
 
 async function run() {
-    {
-        const res = await storage.local.get('enabled');
-        const enabled = (res.enabled as boolean) ?? true;
+    if (!(await get_enabled()))
+        return;
 
-        if (!enabled) return;
-    }
+    await load_saved_schedule();
 
-    // Load saved schedule
-    {
-        const res = await storage.local.get('schedules');
-        const schedules = new Map(Object.entries(res.schedules ?? {}));
+    const deleted: HTMLElement[] = [];
 
-        const url = new URL(window.location.href);
-        const name = url.searchParams.get('schedule');
-        if (name !== null) {
-            const html = schedules.get(name);
-            if (html !== undefined) {
-                document.body.innerHTML = html;
-            }
-        }
-    }
-
-    const deleted: HTMLDivElement[] = [];
-
-    // Listen for clicks on entries
-    document.querySelectorAll<HTMLDivElement>('div.grid-entry').forEach((entry) => {
-        entry.addEventListener('click', (event) => {
-            const div = event.currentTarget as HTMLDivElement;
-
-            deleted.push(div);
-            div.style.display = 'none';
-        });
-    });
-
-    // Listen for Ctrl+Z (Undo)
-    document.addEventListener('keydown', (event) => {
-        if (event.ctrlKey && event.key === 'z') {
-            event.preventDefault();
-
-            const div = deleted.pop();
-
-            if (div) {
-                div.style.display = '';
-            }
-        }
-    });
+    add_entries_click_listener('div.grid-entry', deleted);
+    add_undo_listener(deleted);
 
     // Remove the group list
-    const gl = document.querySelector<HTMLDivElement>('div.group-list');
-    if (gl) {
-        gl.remove();
-    }
-
+    remove_elements('div.group-list');
     // Remove groups
-    document.querySelectorAll<HTMLDivElement>('div.bottom-aligned').forEach((entry) => {
-        entry.remove();
-    });
-
+    remove_elements('div.bottom-aligned');
     // Remove header links
-    /*const hl = document.querySelector<HTMLDivElement>('div.header')?.querySelector<HTMLDivElement>('div.aside');
-    if (hl) {
-        hl.remove();
-    }*/
+    //remove_elements('div.header div.aside');
 
     // Rename subjects
     document.querySelectorAll<HTMLAnchorElement>('a.link-subject').forEach((entry) => {
@@ -80,18 +41,11 @@ async function run() {
         }
     });
 
-    runtime.onMessage.addListener(async (msg: unknown) => {
+    browser.runtime.onMessage.addListener(async (msg: unknown) => {
         if (typeof msg === 'object' && msg !== null && 'type' in msg) {
-            if (msg.type == 'redirect') {
-                const typed_msg = msg as {
-                    type: string;
-                    payload: {
-                        url: string;
-                    };
-                };
-                const {url} = typed_msg.payload;
-
-                window.location.href = url;
+            if (msg.type === 'redirect') {
+                process_redirect(msg);
+                return;
             }
 
             if (msg.type === 'add_entry') {
@@ -139,15 +93,12 @@ async function run() {
 
                     div.prepend(entry);
                 }
+
+                return;
             }
 
             if (msg.type === 'save_schedule') {
-                return {
-                    success: true,
-                    payload: {
-                        html: document.body.innerHTML,
-                    }
-                }
+                return get_save_schedule_response();
             }
         }
     });

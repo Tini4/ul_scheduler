@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import Pickr from "./Pickr.vue";
-
 import {defineProps, ref} from 'vue';
 import {tabs} from 'webextension-polyfill';
 
+import Pickr from "./Pickr.vue";
+
 const {step = 1, start_min, start_max} = defineProps<{
-    step?: number
-    start_min: number
-    start_max: number
+    step?: number,
+    start_min: number,
+    start_max: number,
 }>();
 
 const add_enabled = ref<boolean>(false);

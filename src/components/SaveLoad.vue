@@ -28,12 +28,14 @@ async function save_schedule(event: Event) {
     if (tab?.id !== undefined) {
         const res = await tabs.sendMessage(tab.id, {
             type: 'save_schedule',
+            payload: {},
         });
+
         const typed_res = res as {
-            success: boolean;
+            success: boolean,
             payload: {
-                html: string;
-            };
+                html: string,
+            },
         };
         const {html} = typed_res.payload;
 
