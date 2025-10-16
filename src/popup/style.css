@@ -4,6 +4,16 @@ body {
     width: 370px;
 }
 
+/*
+TODO: max-device-width is deprecated!
+But max-width does not work correct on desktop popup.
+ */
+@media screen and (max-device-width: 480px) {
+    body {
+        width: 100vw;
+    }
+}
+
 #app {
     margin: 0 auto;
     padding: 1rem;
