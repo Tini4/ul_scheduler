@@ -21,7 +21,7 @@ A browser extension to help with scheduling at the University of Ljubljana.
 ## Warning
 
 Modification of the schedule is done in your browser.
-If you close or refresh the page, any unsaved changes made will be lost.
+If you close or refresh the page, any unsaved changes will be lost.
 
 ## Installation
 
