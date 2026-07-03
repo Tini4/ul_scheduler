@@ -1,3 +1,3 @@
 // noinspection JSUnusedGlobalSymbols
 
-export const VERSION: string = __APP_VERSION__
+export const VERSION: string = __APP_VERSION__;
