@@ -90,8 +90,8 @@ onMounted(get_subjects);
 </script>
 
 <template>
-    <main class="px-1">
-        <p class="mb-2">Remove entries by clicking on them.</p>
+    <main>
+        <p class="mb-0">Remove entries by clicking on them.</p>
         <p class="mb-0">To undo a removal, press Ctrl+Z.</p>
 
         <hr class="my-3"/>
@@ -128,6 +128,8 @@ onMounted(get_subjects);
         <hr class="my-3"/>
 
         <SaveLoad/>
+
+        <hr class="my-3"/>
     </main>
 </template>
 

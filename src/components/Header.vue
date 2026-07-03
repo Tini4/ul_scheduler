@@ -28,7 +28,7 @@ watch(enabled, set_enabled);
 </script>
 
 <template>
-    <header class="d-flex align-items-center gap-3 px-2">
+    <header class="d-flex align-items-center gap-3 px-1 mb-2">
         <div class="d-flex align-items-center justify-content-center">
             <h2 class="m-0">UL scheduler</h2>
         </div>

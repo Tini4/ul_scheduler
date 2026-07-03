@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <main class="px-1">
+    <main>
         <p class="mb-0">TODO</p>
     </main>
 </template>

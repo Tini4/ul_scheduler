@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Header from '../components/Header.vue';
-//import Footer from "../components/Footer.vue";
+import Footer from "../components/Footer.vue";
 import Unsupported from '../components/Unsupported.vue';
 import FRI from '../components/FRI.vue';
 import BF from '../components/BF.vue';
@@ -32,8 +32,6 @@ onMounted(get_url);
 <template>
     <Header/>
 
-    <hr class="my-3"/>
-
     <FRI v-if="url.includes(urls.FRI)"/>
     <BF v-else-if="url.includes(urls.BF)"/>
     <FMF v-else-if="url.includes(urls.FMF)"/>
@@ -41,11 +39,7 @@ onMounted(get_url);
     <FS v-else-if="url.includes(urls.FS)"/>
     <Unsupported v-else/>
 
-    <!--
-    <hr class="my-3"/>
-
     <Footer/>
-    -->
 </template>
 
 <style scoped>

@@ -1,13 +1,15 @@
 {
   "name": "ul_scheduler",
   "private": true,
-  "version": "1.1.3.4",
+  "version": "1.1.4.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build && vite build --config vite.config.script.ts && vite build --config vite.config.style.ts && web-ext lint -s dist",
     "preview": "vite preview",
-    "start:firefox": "web-ext run --source-dir ./dist/"
+    "build": "vue-tsc -b && vite build && vite build --config vite.config.script.ts && vite build --config vite.config.style.ts",
+    "lint:ext": "web-ext lint -s dist/",
+    "start:firefox": "web-ext run --source-dir dist/",
+    "dev-build": "npm run build && npm run lint:ext && npm run start:firefox"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
