@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-import {defineModel, onMounted, watch} from 'vue';
+import {defineModel, onBeforeUnmount, onMounted, ref, watch} from 'vue';
 
 import '@simonwep/pickr/dist/themes/monolith.min.css';
 import Pickr from '@simonwep/pickr';
 
 const model = defineModel<string>();
 
-let pickr: Pickr;
+const pickrEl = ref<HTMLElement | null>(null);
+let pickr: Pickr | null = null;
 
 onMounted(() => {
+    if (!pickrEl.value) return;
+
     pickr = Pickr.create({
-        el: '.pickr-div',
+        el: pickrEl.value,
         theme: 'monolith',
         position: 'right-middle',
 
@@ -44,6 +47,13 @@ onMounted(() => {
     });
 });
 
+onBeforeUnmount(() => {
+    if (pickr) {
+        pickr.destroyAndRemove();
+        pickr = null;
+    }
+});
+
 watch(model, () => {
     if (pickr && model.value) {
         pickr.setColor(model.value);
@@ -53,7 +63,7 @@ watch(model, () => {
 
 <template>
     <div class="form-control form-control-color">
-        <div class="pickr-div"></div>
+        <div ref="pickrEl"></div>
     </div>
 </template>
 
