@@ -2,8 +2,8 @@
 </script>
 
 <template>
-    <main class="px-1">
-        <p class="text-end fw-light fst-italic text-body-tertiary m-0">Site not supported.</p>
+    <main>
+        <p class="m-0 text-danger-emphasis">Site not supported.</p>
     </main>
 </template>
 

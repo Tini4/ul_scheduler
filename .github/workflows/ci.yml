@@ -2,7 +2,10 @@ name: CI
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
+
+  push:
+    branches: ["master"]
 
 jobs:
   build:
@@ -20,5 +23,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build
         run: npm run build
+
+      - name: Lint extension
+        run: npm run lint:ext
