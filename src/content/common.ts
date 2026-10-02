@@ -35,7 +35,6 @@ export function add_undo_listener(deleted: HTMLElement[]): void {
             event.preventDefault();
 
             const entry = deleted.pop();
-
             if (entry !== undefined) {
                 entry.style.display = '';
             }
@@ -51,7 +50,10 @@ export function add_order_listener(): void {
 
             document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach(entry => {
                 entry.classList.add('leftmost', 'rightmost');
-                entry.style.left = Math.floor(parseFloat(entry.style.left) / 20) * 20 + '%';
+
+                const left = parseFloat(entry.style.left);
+                const day = Math.floor((left + 1e-2) / 20);
+                entry.style.left = `${day * 20}%`;
                 entry.style.width = '20%';
             });
         }
