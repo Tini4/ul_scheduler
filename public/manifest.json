@@ -22,7 +22,8 @@
     "https://urniki.bf.uni-lj.si/*",
     "https://urnik.fmf.uni-lj.si/*",
     "https://www.wise-tt.com/wtt_fkkt/*",
-    "https://urnik.fs.uni-lj.si/*"
+    "https://urnik.fs.uni-lj.si/*",
+    "https://urnik.ff.uni-lj.si/*"
   ],
   "permissions": [
     "tabs",
@@ -81,6 +82,15 @@
       "js": [
         "browser-polyfill.min.js",
         "src/content/fs.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://urnik.ff.uni-lj.si/*"
+      ],
+      "js": [
+        "browser-polyfill.min.js",
+        "src/content/ff.js"
       ]
     }
   ]
