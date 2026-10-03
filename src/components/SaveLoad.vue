@@ -24,7 +24,6 @@ async function save_schedule(event: Event) {
         return;
 
     const [tab] = await tabs.query({active: true, currentWindow: true});
-
     if (tab?.id !== undefined) {
         const res = await tabs.sendMessage(tab.id, {
             type: 'save_schedule',
