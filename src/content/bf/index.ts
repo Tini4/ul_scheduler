@@ -5,9 +5,11 @@ import {
     get_enabled,
     get_save_schedule_response,
     load_saved_schedule,
+    order,
     process_add_entry_1,
     process_redirect,
-    remove_elements
+    remove_elements,
+    undo
 } from "../common.ts";
 
 async function run() {
@@ -39,6 +41,16 @@ async function run() {
 
             if (msg.type === 'save_schedule') {
                 return get_save_schedule_response();
+            }
+
+            if (msg.type === 'undo') {
+                undo(deleted);
+                return;
+            }
+
+            if (msg.type === 'order') {
+                order();
+                return;
             }
         }
     });

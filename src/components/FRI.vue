@@ -4,6 +4,7 @@ import {storage, tabs} from 'webextension-polyfill';
 
 import AddEntry from "./AddEntry.vue";
 import SaveLoad from "./SaveLoad.vue";
+import Undo from "./Undo.vue";
 
 const url_enabled = ref<boolean>(false);
 const subjects = ref<Set<string>>(new Set());
@@ -92,7 +93,7 @@ onMounted(get_subjects);
 <template>
     <main>
         <p class="mb-0">Remove entries by clicking on them.</p>
-        <p class="mb-0">To undo a removal, press Ctrl+Z.</p>
+        <Undo/>
 
         <hr class="my-3"/>
 

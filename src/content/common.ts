@@ -28,18 +28,30 @@ export function add_entries_click_listener(selector: string, deleted: HTMLElemen
     });
 }
 
+export function undo(deleted: HTMLElement[]): void {
+    const entry = deleted.pop();
+
+    if (entry !== undefined) {
+        entry.style.display = '';
+    }
+}
+
 export function add_undo_listener(deleted: HTMLElement[]): void {
     // Listen for Ctrl+Z
     document.addEventListener('keydown', (event) => {
         if (event.ctrlKey && event.key === 'z') {
             event.preventDefault();
 
-            const entry = deleted.pop();
-
-            if (entry !== undefined) {
-                entry.style.display = '';
-            }
+            undo(deleted);
         }
+    });
+}
+
+export function order(): void {
+    document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach(entry => {
+        entry.classList.add('leftmost', 'rightmost');
+        entry.style.left = Math.floor(parseFloat(entry.style.left) / 20) * 20 + '%';
+        entry.style.width = '20%';
     });
 }
 
@@ -49,11 +61,7 @@ export function add_order_listener(): void {
         if (event.ctrlKey && event.key === 'o') {
             event.preventDefault();
 
-            document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach(entry => {
-                entry.classList.add('leftmost', 'rightmost');
-                entry.style.left = Math.floor(parseFloat(entry.style.left) / 20) * 20 + '%';
-                entry.style.width = '20%';
-            });
+            order();
         }
     });
 }
