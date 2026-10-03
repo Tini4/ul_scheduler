@@ -31,7 +31,6 @@ async function run() {
     // Rename subjects
     document.querySelectorAll<HTMLAnchorElement>('a.link-subject').forEach((entry) => {
         const m = entry.innerText.match(/^(.*?)(\(.*\))?_.*$/);
-
         if (m) {
             if (m[1]) {
                 entry.innerText = m[1];

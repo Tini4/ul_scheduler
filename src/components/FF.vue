@@ -1,19 +1,17 @@
 <script lang="ts" setup>
 import AddEntry from "./AddEntry.vue";
 import SaveLoad from "./SaveLoad.vue";
-import Undo from "./Undo.vue";
-import Order from "./Order.vue";
 </script>
 
 <template>
     <main>
         <p class="mb-0">Remove entries by clicking on them.</p>
-        <Undo/>
-        <Order/>
+        <p class="mb-0">To undo a removal, press Ctrl+Z.</p>
+        <p class="mb-0">After you are done removing, press Ctrl+O to order the entries.</p>
 
         <hr class="my-3"/>
 
-        <AddEntry :start_max="21" :start_min="7" :step="1/4"/>
+        <AddEntry :start_max="23" :start_min="7" :step="1/10"/>
 
         <hr class="my-3"/>
 

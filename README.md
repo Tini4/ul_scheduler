@@ -5,6 +5,7 @@ A browser extension to help with scheduling at the University of Ljubljana.
 ## Supported faculties
 
 - BF
+- FF
 - FMF
 - FRI
 - FS
@@ -16,7 +17,7 @@ A browser extension to help with scheduling at the University of Ljubljana.
 - Undo with Ctrl+Z
 - Link generation (FRI)
 - Adding entries
-- **New** in 1.1.x: Schedule saving
+- Schedule saving
 
 ## Warning
 
