@@ -3,18 +3,21 @@ export async function get_enabled(): Promise<boolean> {
     return (res.enabled as boolean) ?? true;
 }
 
-export async function load_saved_schedule(): Promise<void> {
+export async function load_saved_schedule(): Promise<boolean> {
     const res = await browser.storage.local.get('schedules');
     const schedules = new Map(Object.entries(res.schedules ?? {}));
 
     const url = new URL(window.location.href);
     const name = url.searchParams.get('schedule');
-    if (name !== null) {
-        const html = schedules.get(name);
-        if (html !== undefined) {
-            document.body.innerHTML = html;
-        }
-    }
+    if (name === null)
+        return false;
+
+    const html = schedules.get(name);
+    if (html === undefined)
+        return false;
+
+    document.body.innerHTML = html;
+    return true;
 }
 
 export function add_entries_click_listener(selector: string, deleted: HTMLElement[]): void {

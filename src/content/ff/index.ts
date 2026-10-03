@@ -14,15 +14,15 @@ async function run() {
     if (!(await get_enabled()))
         return;
 
-    // Use good layout
+    const save_loaded = await load_saved_schedule();
+
+    // Use good layout unless loading a saved schedule
     const url = new URL(window.location.href);
-    if (url.searchParams.get('is_alternative') !== 'false') {
+    if (!save_loaded && url.searchParams.get('is_alternative') !== 'false') {
         url.searchParams.set('is_alternative', 'false');
         window.location.href = url.toString();
         return;
     }
-
-    await load_saved_schedule();
 
     const deleted: HTMLElement[] = [];
 
@@ -33,36 +33,39 @@ async function run() {
     // Remove groups
     remove_elements('span.layer_one');
 
-    // Remove Saturday header and scale the remaining headers
-    document.querySelectorAll<HTMLElement>('#days .day').forEach((day, index) => {
-        if (index === 5) {
-            day.remove();
-            return;
-        }
+    // Remove Saturday
+    if (document.querySelectorAll('#days .day').length === 6) {
+        // Remove Saturday header and scale the remaining headers
+        document.querySelectorAll<HTMLElement>('#days .day').forEach((day, index) => {
+            if (index === 5) {
+                day.remove();
+                return;
+            }
 
-        const left = parseFloat(day.style.left);
-        const width = parseFloat(day.style.getPropertyValue('--day-width'));
+            const left = parseFloat(day.style.left);
+            const width = parseFloat(day.style.getPropertyValue('--day-width'));
 
-        // Scale the original 6-column layout to 5 columns
-        day.style.left = `${left * 6 / 5}%`;
-        day.style.setProperty('--day-width', `${width * 6 / 5}%`);
-    });
+            // Scale the original 6-column layout to 5 columns
+            day.style.left = `${left * 6 / 5}%`;
+            day.style.setProperty('--day-width', `${width * 6 / 5}%`);
+        });
 
-    // Remove Saturday entries and scale the remaining entries
-    document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach(entry => {
-        const left = parseFloat(entry.style.left);
-        const width = parseFloat(entry.style.width);
+        // Remove Saturday entries and scale the remaining entries
+        document.querySelectorAll<HTMLDivElement>('div.entry-absolute-box').forEach(entry => {
+            const left = parseFloat(entry.style.left);
+            const width = parseFloat(entry.style.width);
 
-        // Saturday starts at 83.33%
-        if (left >= 83) {
-            entry.remove();
-            return;
-        }
+            // Saturday starts at 83.33%
+            if (left >= 83) {
+                entry.remove();
+                return;
+            }
 
-        // Scale the original 6-column layout to 5 columns
-        entry.style.left = `${left * 6 / 5}%`;
-        entry.style.width = `${width * 6 / 5}%`;
-    });
+            // Scale the original 6-column layout to 5 columns
+            entry.style.left = `${left * 6 / 5}%`;
+            entry.style.width = `${width * 6 / 5}%`;
+        });
+    }
 
     browser.runtime.onMessage.addListener(async (msg: unknown) => {
         if (typeof msg === 'object' && msg !== null && 'type' in msg) {
