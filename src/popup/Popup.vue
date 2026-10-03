@@ -7,6 +7,7 @@ import BF from '../components/BF.vue';
 import FMF from '../components/FMF.vue';
 //import FKKT from '../components/FKKT.vue';
 import FS from "../components/FS.vue";
+import FF from "../components/FF.vue";
 
 import {onMounted, ref} from 'vue';
 import {tabs} from 'webextension-polyfill';
@@ -18,6 +19,7 @@ const urls = {
     FMF: 'urnik.fmf.uni-lj.si',
     //FKKT: 'www.wise-tt.com/wtt_fkkt',
     FS: 'urnik.fs.uni-lj.si',
+    FF: 'urnik.ff.uni-lj.si',
 };
 
 async function get_url() {
@@ -37,6 +39,7 @@ onMounted(get_url);
     <FMF v-else-if="url.includes(urls.FMF)"/>
     <!--<FKKT v-else-if="url.includes(urls.FKKT)"/>-->
     <FS v-else-if="url.includes(urls.FS)"/>
+    <FF v-else-if="url.includes(urls.FF)"/>
     <Unsupported v-else/>
 
     <Footer/>

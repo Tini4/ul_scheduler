@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {defineProps, ref} from 'vue';
+import {ref} from 'vue';
 import {tabs} from 'webextension-polyfill';
 
 import Pickr from "./Pickr.vue";
@@ -80,6 +80,7 @@ async function add_entry(event: Event) {
                 <input v-model="title_input" class="form-control" placeholder="Title" required type="text">
             </div>
             <div class="d-flex align-items-center gap-2 mt-2">
+                <!--TODO: Change start and length to something nicer than decimals-->
                 <input v-model="start_input" :max="start_max - step" :min="start_min" :step="step" class="form-control"
                        placeholder="Start" required type="number">
                 <input v-model="length_input" :max="start_max - (start_input ?? 0)" :min="step" :step="step"

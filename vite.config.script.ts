@@ -4,7 +4,7 @@ import {defineConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
 import {execSync} from 'child_process';
 
-const entries = ['fri', 'bf', 'fmf', 'fkkt', 'fs'];
+const entries = ['fri', 'bf', 'fmf', 'fkkt', 'fs', 'ff'];
 
 // https://vite.dev/config/
 export default defineConfig(({command}) => {

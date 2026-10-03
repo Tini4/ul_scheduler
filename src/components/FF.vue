@@ -11,7 +11,7 @@ import SaveLoad from "./SaveLoad.vue";
 
         <hr class="my-3"/>
 
-        <AddEntry :start_max="21" :start_min="7" :step="1/4"/>
+        <AddEntry :start_max="23" :start_min="7" :step="1/10"/>
 
         <hr class="my-3"/>
 
